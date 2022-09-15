@@ -11,7 +11,7 @@ jobs:
     steps:
       # Request manual activation file
       - uses: actions/checkout@v3
-      - runs: |
+      - run: |
           cd ci\unity-req-license
           powershell .\req-license.ps1
       - name: Expose as artifact
