@@ -1,6 +1,9 @@
 name: Test activation file
 on:
   workflow_dispatch: {}
+  push:
+    branches:
+      - ci-test
 
 jobs:
   test-activation:
