@@ -10,12 +10,12 @@ jobs:
     runs-on: windows-2019
     steps:
       # Request manual activation file
-      - name: Request manual activation file
-        id: getManualLicenseFile
-        uses: game-ci/unity-request-activation-file@v2
-      # Upload artifact (Unity_v20XX.X.XXXX.alf)
+      - uses: actions/checkout@v3
+      - runs: |
+          cd ci\unity-req-license
+          powershell .\req-license.ps1
       - name: Expose as artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ steps.getManualLicenseFile.outputs.filePath }}
-          path: ${{ steps.getManualLicenseFile.outputs.filePath }}
+          name: license-request
+          path: ci\unity-req-license
