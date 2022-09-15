@@ -16,8 +16,14 @@ jobs:
           dotnet-version: '6.0.x'
       - run: dotnet tool install --global vrchat.vpm.cli
       - run: vpm add package com.vrchat.avatars
-      
+      - uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library-EditModeTests
+          restore-keys: |
+            Library-
       - uses: game-ci/unity-test-runner@v2
+        id: tests
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
@@ -25,3 +31,14 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           unityVersion: 2019.4.31f1
           testMode: EditMode
+          artifactsPath: test-artifacts
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: Test results for edit mode tests
+          path: ${{ steps.tests.outputs.artifactsPath }}
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: Coverage results for edit mode tests
+          path: ${{ steps.tests.outputs.coveragePath }}
