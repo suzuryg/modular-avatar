@@ -11,10 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0.x'
+      - run: dotnet tool install --global vrchat.vpm.cli
+      - run: vpm add com.vrchat.avatars
       
       - uses: game-ci/unity-test-runner@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
-          projectPath: path/to/your/project
+          projectPath: .
           githubToken: ${{ secrets.GITHUB_TOKEN }}
