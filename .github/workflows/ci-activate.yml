@@ -1,4 +1,4 @@
-name: Test activation file
+name: Run tests
 on:
   workflow_dispatch: {}
   push:
@@ -15,7 +15,7 @@ jobs:
         with:
           dotnet-version: '6.0.x'
       - run: dotnet tool install --global vrchat.vpm.cli
-      - run: vpm add com.vrchat.avatars
+      - run: vpm add package com.vrchat.avatars
       
       - uses: game-ci/unity-test-runner@v2
         env:
